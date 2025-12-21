@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+@import "tailwindcss";
+@plugin "daisyui";
+@plugin "tailwind-scrollbar";
+
+/* 1. Global CSS Variables */
+:root {
+  --background: #131720;
+  --foreground: #ffffff;
+  --primary: #2f80ed;
+  --hover: #14233e;
+  --footer: #141a25;
+}
+
+@theme {
+  --font-primary: "Rubik", "sans-serif";
+  --color-primary-co: var(--primary);
+  --color-hover: var(--hover);
+  --color-footer: var(--footer);
+}
+
+/* 2. Base Styles (resets) */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    height: 100%;
+    font-family: var(--font-primary);
+    background: var(--background);
+    color: var(--foreground);
+  }
+}
+
+/* 1. Utilities Styles */
+
+@layer utilities {
+  .flex-row-center {
+    @apply flex items-center justify-center;
+  }
+  .flex-col-center {
+    @apply flex flex-col items-center justify-center;
+  }
+
+  /* menu */
+
+  .menu-active-gradient {
+    background-color: var(--hover);
+    color: var(--primary);
+  }
+
+  /* footer */
+
+  .media-bg:hover {
+    background: linear-gradient(to right, var(--primary), #2f81ed94);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(6px);
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  .footer-typo-logo {
+    background: linear-gradient(to right, var(--primary), #2f81ed94);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* show scrollbar */
+  .scrollbar-show {
+    @apply scrollbar-thin 
+           scrollbar-track-transparent 
+           scrollbar-thumb-primary 
+           hover:scrollbar-thumb-hover;
+  }
+
+  /* Hide scrollbar */
+  .scrollbar-hide {
+    @apply scrollbar-none;
+  }
+
+  /** infinite loop scroll animation */
+  @keyframes scroll-loop {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-scroll-loop {
+    animation: scroll-loop 50s linear infinite;
+  }
+
+  .paused {
+    animation-play-state: paused !important;
+  }
+}
