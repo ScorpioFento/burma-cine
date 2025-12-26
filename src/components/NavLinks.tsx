@@ -53,12 +53,12 @@ export default function NavLinks({
   return (
     <ul ref={listRef} className={`gap-4 ${className}`}>
       {navItems.map((i) => (
-        <li key={i.path} className="nav-item">
+        <li key={i.path}>
           <NavLink
             to={i.path}
             onClick={onClick}
             className={({ isActive }) =>
-              isActive ? "menu-active-gradient" : ""
+              isActive ? "flex-col-center menu-active-gradient" : ""
             }
           >
             {i.label}

@@ -1,4 +1,6 @@
 "use client";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 
 // Updated movie data with image URLs
@@ -353,6 +355,36 @@ export default function Carousel() {
     };
   }, []);
 
+  const titleRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const tl = gsap.timeline({
+        defaults: {
+          duration: 1.5,
+          ease: "power3.out",
+        },
+      });
+
+      tl.add("start")
+        .from(".title-badge", {
+          y: 20,
+          autoAlpha: 0,
+        })
+        .from(
+          ".title-word",
+          {
+            y: 30,
+            autoAlpha: 0,
+            stagger: 0.2,
+            duration: 4,
+          },
+          "start+=0.4"
+        );
+    },
+    { scope: titleRef }
+  );
+          
   return (
     <section className="relative bg-linear-to-br from-gray-900 to-black overflow-hidden flex justify-center items-center px-4 py-8">
       <div className="container mx-auto">
@@ -361,25 +393,25 @@ export default function Carousel() {
           <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl" />
         </div>
 
-        <div className="relative flex flex-col items-center w-full max-w-7xl mx-auto">
+        <div className="relative flex-col-center w-full mx-auto">
           {/* Enhanced Title Section */}
-          <div className="text-center w-full max-w-4xl mx-auto">
-            <div className="mb-4 md:mb-6">
-              <span className="inline-block bg-gradient-to-r from-amber-500 to-yellow-400 text-transparent bg-clip-text text-sm md:text-base font-semibold tracking-wider uppercase mb-2">
+          <div className="text-center w-full max-w-4xl">
+            <div ref={titleRef} className="mb-4 md:mb-6">
+              <span className="title-badge inline-block bg-gradient-to-r from-amber-500 to-yellow-400 text-transparent bg-clip-text font-semibold tracking-wider uppercase mb-2">
                 Curated Collection
               </span>
-              <h1 className="font-bold tracking-tight text-[clamp(1rem,5vw+0.5rem,3.5rem)]">
-                <span className="bg-linear-to-r from-white via-gray-100 to-gray-300  text-transparent bg-clip-text">
+              <h2 className="font-size-hero">
+                <span className="title-word bg-linear-to-r from-white via-gray-100 to-gray-300  text-transparent bg-clip-text">
                   Cinematic
                 </span>
-                <span className="bg-linear-to-r from-amber-400 via-yellow-400 to-amber-500 text-transparent ml-3 bg-clip-text">
+                <span className="title-word bg-linear-to-r from-amber-400 via-yellow-400 to-amber-500 text-transparent ml-3 bg-clip-text">
                   Masterpieces
                 </span>
-              </h1>
+              </h2>
             </div>
 
             <div className="mb-6 md:mb-8">
-              <p className="text-lg md:text-xl lg:text-2xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-gray-200">
                 Explore timeless classics and modern triumphs that define
                 cinematic excellence across generations
               </p>
@@ -393,7 +425,6 @@ export default function Carousel() {
           </div>
 
           {/* Status Indicator */}
-        
 
           <div className="relative w-full flex justify-center">
             <div

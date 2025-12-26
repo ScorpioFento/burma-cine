@@ -7,12 +7,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           <section className="lg:col-span-2 lg:pr-10">
             <header>
-              <h2 className="text-3xl font-bold">
+              <h3>
                 <span className="footer-typo-logo">Burma</span>{" "}
                 <span className="footer-typo-logo">Cine</span>
-              </h2>
+              </h3>
             </header>
-            <p className="mt-4 text-[clamp(1rem,2vw+0.5rem,1rem)] leading-6">
+            <p className="mt-6 text-[0.875rem]">
               Your premier destination for cinematic excellence. Bringing you
               the best of Burmese cinema with unparalleled quality and service.
             </p>
@@ -39,19 +39,19 @@ export default function Footer() {
           {footerSection.map((i) => (
             <section key={i.title}>
               <header>
-                <h3 className="footer-title text-lg font-semibold">
+                <h4 className="footer-title">
                   {i.title}
-                </h3>
+                </h4>
               </header>
-              <nav>
+              <nav className="mt-4">
                 <ul className="space-y-2">
                   {i.links.map((l) => (
                     <li key={l}>
                       <a
                         href="#"
-                        className="group relative py-1 text-base transition-colors duration-300 hover:text-primary-co"
+                        className="group relative py-1 transition-colors duration-300 hover:text-primary-co"
                       >
-                        <span className="relative z-10">{l}</span>
+                        <span className="relative">{l}</span>
                         <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-primary-co group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
                       </a>
                     </li>
