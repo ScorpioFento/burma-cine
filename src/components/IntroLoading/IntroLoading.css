@@ -1,0 +1,63 @@
+/* Cinematic Wave Loading Styles */
+
+/* =====================
+   Existing Cinematic Sweep
+===================== */
+.floating-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 193, 7, 0.1),
+    transparent
+  );
+  animation: cinematicLights 3s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes cinematicLights {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* =====================
+   Camera Flash Effect (EVERY 2s)
+===================== */
+.floating-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 193, 7, 0.4) 15%,
+    rgba(255, 193, 7, 0.25) 25%,
+    rgba(255, 193, 7, 0.1) 45%,
+    transparent 65%
+  );
+  animation: cameraFlash 2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes cameraFlash {
+  0% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  12% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}

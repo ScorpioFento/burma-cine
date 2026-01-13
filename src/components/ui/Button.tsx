@@ -1,29 +1,25 @@
-"use client";
-import React from "react";
+import React, { forwardRef } from "react";
 
 type ButtonProps = {
   onClick?: () => void;
   className?: string;
   children: React.ReactNode;
+  type?: "button" | "submit" | "reset";
 };
 
-export default function Button({
-  onClick,
-  className = "",
-  children,
-}: ButtonProps) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`hover:bg-primary ${className}`}
-    >
-      {children}
-    </button>
-  );
-}
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ onClick, className = "", children, type = "button" }, ref) => {
+    return (
+      <button
+        ref={ref}
+        type={type}
+        onClick={onClick}
+        className={`btn ${className}`}
+      >
+        {children}
+      </button>
+    );
+  }
+);
 
-
-
-
-
+export default Button;

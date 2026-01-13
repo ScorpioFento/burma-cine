@@ -1,4 +1,4 @@
-export function calculateCarouselCardSize(
+function calculateCarouselCardSize(
   containerWidth: number,
   totalItems: number,
   options: {
@@ -16,7 +16,11 @@ export function calculateCarouselCardSize(
   } = options;
 
   if (!containerWidth || containerWidth <= 0) {
-    return { cardWidth: minWidth, cardHeight: minWidth * aspectRatio, radius: 300 };
+    return {
+      cardWidth: minWidth,
+      cardHeight: minWidth * aspectRatio,
+      radius: 300,
+    };
   }
 
   // Make card width responsive to screen size
@@ -32,3 +36,25 @@ export function calculateCarouselCardSize(
 
   return { cardWidth, cardHeight, radius };
 }
+
+//* Use for Query string
+function toQueryString<T extends object>(params: T): string {
+  const searchParams = new URLSearchParams();
+
+  for (const [key, value] of Object.entries(params)) {
+    if (
+      value !== undefined &&
+      value !== null &&
+      (typeof value === "string" ||
+        typeof value === "number" ||
+        typeof value === "boolean")
+    ) {
+      searchParams.append(key, String(value));
+    }
+  }
+
+  const query = searchParams.toString();
+  return query ? `?${query}` : "";
+}
+
+export { calculateCarouselCardSize, toQueryString };

@@ -53,7 +53,7 @@ export default function NavLinks({
   return (
     <ul ref={listRef} className={`gap-4 ${className}`}>
       {navItems.map((i) => (
-        <li key={i.path}>
+        <li key={i.path} className="nav-item">
           <NavLink
             to={i.path}
             onClick={onClick}

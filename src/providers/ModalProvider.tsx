@@ -2,11 +2,17 @@ import {
   createContext,
   useCallback,
   useContext,
+  useRef,
   useState,
+  forwardRef,
   type ReactNode,
   type MouseEvent,
 } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import Button from "../components/ui/Button";
+import { X } from "lucide-react";
+
 type ModalContextValue = {
   openModal(content: ReactNode): void;
   closeModal(): void;
@@ -14,26 +20,36 @@ type ModalContextValue = {
 
 const ModalContext = createContext<ModalContextValue | undefined>(undefined);
 
-export function useModal(): ModalContextValue {
-  const context = useContext(ModalContext);
-
-  if (!context) {
-    throw new Error("Use Modal must be used inside Modal Provider");
-  }
-
-  return context;
+export function useModal() {
+  const ctx = useContext(ModalContext);
+  if (!ctx) throw new Error("useModal must be used inside ModalProvider");
+  return ctx;
 }
 
 export function ModalProvider({ children }: { children: ReactNode }) {
   const [content, setContent] = useState<ReactNode>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
+
   const isOpen = Boolean(content);
 
-  const openModal = useCallback(function openModal(content: ReactNode) {
-    setContent(content);
+  const openModal = useCallback((node: ReactNode) => {
+    setContent(node);
   }, []);
 
-  const closeModal = useCallback(function closeModal() {
-    setContent(null);
+  const closeModal = useCallback(() => {
+    if (!closeBtnRef.current) {
+      setContent(null);
+      return;
+    }
+
+    gsap.to(closeBtnRef.current, {
+      y: -20,
+      rotate: 180,
+      opacity: 0,
+      duration: 0.25,
+      ease: "power2.in",
+      onComplete: () => setContent(null),
+    });
   }, []);
 
   function handleBackdropClick(e: MouseEvent<HTMLDialogElement>) {
@@ -49,7 +65,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
       {isOpen && (
         <dialog open className="modal modal-open" onClick={handleBackdropClick}>
           <div className="modal-box relative">
-            <CloseButton onClose={closeModal} />
+            <CloseButton ref={closeBtnRef} onClose={closeModal} />
             {content}
           </div>
         </dialog>
@@ -58,23 +74,36 @@ export function ModalProvider({ children }: { children: ReactNode }) {
   );
 }
 
-function CloseButton({ onClose }: { onClose: () => void }) {
-  return (
-    // <button
-    //   type="button"
-    //   aria-label="Close modal"
-    //   className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-    //   onClick={onClose}
-    // >
-    //   ✕
-    // </button>
+const CloseButton = forwardRef<HTMLButtonElement, { onClose: () => void }>(
+  (props, ref) => {
+    const { onClose } = props;
 
-    <Button 
-    onClick={onClose} 
-    
-    >
-        ✕
-    </Button>
+    useGSAP(() => {
+      if (!ref || typeof ref === "function") return;
 
-  );
-}
+      gsap.fromTo(
+        ref.current,
+        { y: -20, rotate: -90, opacity: 0 },
+        {
+          y: 0,
+          rotate: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "back.out(1.7)",
+        }
+      );
+    });
+
+    return (
+      <Button
+        ref={ref}
+        onClick={onClose}
+        className="btn-circle bg-hover absolute top-2 right-2"
+      >
+        <X size={20} />
+      </Button>
+    );
+  }
+);
+
+export default CloseButton;

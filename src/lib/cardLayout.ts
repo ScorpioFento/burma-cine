@@ -66,11 +66,7 @@ export function calculateCardSize(
 
     columns = matchedRule?.columns ?? 1;
   }
-
- 
   if (!columns || columns <= 0) columns = 1;
-
- 
   const totalGap = columnGap * (columns - 1);
   const cardWidth = (viewportWidth - totalGap) / columns;
   const cardHeight = cardWidth * aspectRatio;
@@ -80,3 +76,4 @@ export function calculateCardSize(
     height: Math.round(cardHeight),
   };
 }
+

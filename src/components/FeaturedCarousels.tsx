@@ -397,7 +397,7 @@ export default function Carousel() {
           {/* Enhanced Title Section */}
           <div className="text-center w-full max-w-4xl">
             <div ref={titleRef} className="mb-4 md:mb-6">
-              <span className="title-badge inline-block bg-gradient-to-r from-amber-500 to-yellow-400 text-transparent bg-clip-text font-semibold tracking-wider uppercase mb-2">
+              <span className="title-badge inline-block bg-linear-to-r from-amber-400 via-yellow-400 text-transparent bg-clip-text to-amber-500 font-semibold tracking-wider uppercase mb-2">
                 Curated Collection
               </span>
               <h2 className="font-size-hero">
