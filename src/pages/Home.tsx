@@ -1,12 +1,11 @@
-import Banner from "../components/Banner";
+import Banner from "../components/Banner/Banner";
+import FeaturedCarousels from "../components/FeaturedCarousels";
 
 export default function Home() {
   return (
     <>
-    <Banner />
-    
-      
-  
+      <Banner />
+      <FeaturedCarousels />
     </>
   );
 }

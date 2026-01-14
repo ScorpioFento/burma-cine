@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { NavLink } from "react-router-dom";
-import { navItems } from "../consts";
+import { navItems } from "../../consts";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
@@ -58,7 +58,7 @@ export default function NavLinks({
             to={i.path}
             onClick={onClick}
             className={({ isActive }) =>
-              isActive ? "flex-col-center menu-active-gradient" : ""
+              isActive ? "flex-col-center bg-hover text-primary-co" : ""
             }
           >
             {i.label}

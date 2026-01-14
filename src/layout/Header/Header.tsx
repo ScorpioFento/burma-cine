@@ -3,13 +3,13 @@ import Hamburger from "./Hamburger";
 import NavLinks from "./NavLinks";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useModal } from "../providers/ModalProvider";
-import LoginForm from "../auth/LoginForm";
+import { useModal } from "../../providers/ModalProvider";
+import LoginForm from "../../auth/LoginForm";
 
 export default function Header() {
   const [open, setOpen] = useState<boolean>(false);
   const headerRef = useRef<HTMLElement>(null);
-  const {openModal} = useModal();
+  const { openModal } = useModal();
   useGSAP(() => {
     if (headerRef.current) {
       gsap.from(headerRef.current, {
@@ -71,7 +71,12 @@ export default function Header() {
         </div>
 
         <div className="navbar-end">
-          <button onClick={() => openModal(<LoginForm />)} className="btn btn-md">Sign in</button>
+          <button
+            onClick={() => openModal(<LoginForm />)}
+            className="btn btn-md"
+          >
+            Sign in
+          </button>
         </div>
       </nav>
     </header>

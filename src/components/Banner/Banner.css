@@ -1,0 +1,18 @@
+/** infinite loop scroll animation */
+@keyframes carousel {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-1 * var(--track-width)));
+  }
+}
+
+.animate-carousel {
+  animation: carousel var(--duration) linear infinite;
+  will-change: transform;
+}
+
+.animate-carousel:hover {
+  animation-play-state: paused;
+}

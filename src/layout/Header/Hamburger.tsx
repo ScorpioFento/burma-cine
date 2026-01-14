@@ -9,7 +9,6 @@ export default function Hamburger({ open, setOpen }: HamburgerProps) {
       onClick={() => setOpen(!open)}
       className="flex flex-col justify-between w-8 h-6 md:hidden"
     >
-   
       <span
         className={`
           h-1 my-0.5 rounded-md bg-white transition-all duration-300 ease-in-out
@@ -17,7 +16,6 @@ export default function Hamburger({ open, setOpen }: HamburgerProps) {
         `}
       />
 
-     
       <span
         className={`
           h-1 my-0.5 rounded-md bg-white transition-all duration-500 ease-in-out
@@ -25,7 +23,6 @@ export default function Hamburger({ open, setOpen }: HamburgerProps) {
         `}
       />
 
-     
       <span
         className={`
           h-1 my-0.5 rounded-md bg-white transition-all duration-300 ease-in-out

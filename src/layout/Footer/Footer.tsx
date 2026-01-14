@@ -1,4 +1,4 @@
-import { footerSection, socialLinks } from "../consts";
+import { footerSection, socialLinks } from "../../consts";
 
 export default function Footer() {
   return (
@@ -39,9 +39,7 @@ export default function Footer() {
           {footerSection.map((i) => (
             <section key={i.title}>
               <header>
-                <h4 className="footer-title">
-                  {i.title}
-                </h4>
+                <h4 className="footer-title">{i.title}</h4>
               </header>
               <nav className="mt-4">
                 <ul className="space-y-2">

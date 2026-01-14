@@ -162,7 +162,7 @@ const useAutoAnimation = (isEnabled: boolean, rotationSpeed: number) => {
   return { rotation, setRotation };
 };
 
-export default function Carousel() {
+export default function FeaturedCarousels() {
   const { width: CARD_WIDTH, height: CARD_HEIGHT } = useResponsiveCardSize();
   const [isAutoAnimating, setIsAutoAnimating] = useState(true);
   const [dragState, setDragState] = useState<DragState>({
@@ -384,7 +384,7 @@ export default function Carousel() {
     },
     { scope: titleRef }
   );
-          
+
   return (
     <section className="relative bg-linear-to-br from-gray-900 to-black overflow-hidden flex justify-center items-center px-4 py-8">
       <div className="container mx-auto">

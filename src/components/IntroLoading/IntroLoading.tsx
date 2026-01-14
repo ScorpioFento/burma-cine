@@ -21,6 +21,7 @@ export default function IntroLoading() {
   const cameramanRef = useRef<HTMLImageElement>(null);
   const cameraWheelRef = useRef<HTMLDivElement>(null);
   const pulseLineRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -57,25 +58,20 @@ export default function IntroLoading() {
     const lineWidth = pulseLineRef.current.getBoundingClientRect().width;
     const startX = -lineWidth / 2;
 
-    setInitialPositions(startX);
+    // Set both at the same position initially (they'll overlap)
+    gsap.set([cameramanRef.current, cameraWheelRef.current], {
+      x: startX,
+      y: 0,
+      transformOrigin: "center",
+    });
+
+    // Scale the cameraman down a bit
+    gsap.set(cameramanRef.current, {
+      scale: 0.8,
+    });
+
     createMovementTimeline(lineWidth);
     createFloatingEffect();
-  };
-
-  const setInitialPositions = (startX: number) => {
-    gsap.set(cameramanRef.current, {
-      x: startX + 20,
-      y: 0,
-      scale: 0.8,
-      transformOrigin: "center",
-    });
-
-    gsap.set(cameraWheelRef.current, {
-      x: startX - 15,
-      y: 0,
-      rotation: 0,
-      transformOrigin: "center",
-    });
   };
 
   const rotateWheel = (direction: 1 | -1, progress: number) => {
@@ -120,7 +116,10 @@ export default function IntroLoading() {
   };
 
   return (
-    <div className="fixed inset-0 bg-linear-to-b from-gray-950 to-black z-50 overflow-hidden floating-container">
+    <div 
+      ref={containerRef}
+      className="fixed inset-0 bg-linear-to-b from-gray-950 to-black z-50 overflow-hidden floating-container"
+    >
       <div className="relative h-full flex flex-col items-center justify-center">
         {/* Logo */}
         <div className="relative mb-10">
@@ -133,8 +132,15 @@ export default function IntroLoading() {
             <div ref={pulseLineRef} className="relative h-px w-48 mx-auto mt-3">
               <div className="absolute inset-0 bg-linear-to-r from-transparent via-amber-500 to-transparent animate-pulse" />
 
-              <CameraWheel ref={cameraWheelRef} />
-              <Cameraman ref={cameramanRef} />
+              {/* Camera Wheel placed BEHIND the cameraman */}
+              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                <CameraWheel ref={cameraWheelRef} />
+              </div>
+              
+              {/* Cameraman placed ON TOP of the wheel */}
+              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                <Cameraman ref={cameramanRef} />
+              </div>
             </div>
           </div>
         </div>
@@ -164,11 +170,8 @@ const CameraWheel = forwardRef<HTMLDivElement>((_, ref) => {
   return (
     <div
       ref={ref}
-      className="absolute z-10 w-8 h-8 rounded-full border-2 border-amber-500/70 bg-black/60"
+      className="relative w-8 h-8 rounded-full border-2 border-amber-500/70 bg-black/60"
       style={{
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
         filter: "drop-shadow(0 0 5px rgba(255,193,7,0.5))",
       }}
     >
@@ -199,11 +202,10 @@ const Cameraman = forwardRef<HTMLImageElement>((_, ref) => (
     ref={ref}
     src={cameraman}
     alt="Cameraman"
-    className="absolute z-20 w-16 h-16 object-contain"
+    className="relative w-16 h-16 object-contain"
     style={{
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
+      marginLeft: "-8px", // Offset to center the cameraman over the wheel
+      marginTop: "-8px",
       filter: "drop-shadow(0 0 8px rgba(255,193,7,0.6))",
     }}
   />
