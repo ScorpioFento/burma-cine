@@ -1,18 +1,26 @@
 import { useEffect, useState } from "react";
 
-export function useViewportWidth(debounceMs = 150) {
-  const [width, setWidth] = useState(0);
-  const [isResizing, setIsResizing] = useState(false);
+interface ViewportSize {
+  width: number;
+  isResizing: boolean;
+}
 
-  useEffect(() => {
-    let timeout: number;
+export function useViewportWidth(debounceMs: number = 150): ViewportSize {
+  const [width, setWidth] = useState<number>(0);
+  const [isResizing, setIsResizing] = useState<boolean>(false);
 
-    const handleResize = () => {
+  useEffect((): (() => void) => {
+    if (typeof window === "undefined") return () => {};
+
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+    const handleResize = (): void => {
       setIsResizing(true);
       setWidth(window.innerWidth);
 
-      clearTimeout(timeout);
-      timeout = window.setTimeout(() => {
+      if (timeoutId) clearTimeout(timeoutId);
+
+      timeoutId = setTimeout(() => {
         setIsResizing(false);
       }, debounceMs);
     };
@@ -21,7 +29,7 @@ export function useViewportWidth(debounceMs = 150) {
     window.addEventListener("resize", handleResize);
 
     return () => {
-      clearTimeout(timeout);
+      if (timeoutId) clearTimeout(timeoutId);
       window.removeEventListener("resize", handleResize);
     };
   }, [debounceMs]);

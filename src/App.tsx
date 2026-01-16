@@ -1,17 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { routes, type RouteItem } from "./routes/routes";
-import { useEffect, useState } from "react";
 import IntroLoading from "./components/IntroLoading/IntroLoading";
+import { useAppLoading } from "./hooks/useAppLoading";
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, []);
+  const isLoading = useAppLoading();
 
   function renderRoutes(routeList: RouteItem[]) {
     return routeList.map((r) => (
