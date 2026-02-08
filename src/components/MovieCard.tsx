@@ -1,6 +1,7 @@
 // MovieCard.tsx
 import { Link } from "react-router-dom";
 import type { Movie } from "../services/interface/movie";
+import { Image } from "./ui/Image";
 
 interface MovieCardProps {
   movie: Movie;
@@ -11,17 +12,23 @@ export default function MovieCard({ movie }: MovieCardProps) {
 
   return (
     <Link 
-      to={`/movie/${movie.id}`} 
+      to={`/detail/${movie.id}`} 
       className="group relative block rounded-2xl overflow-hidden bg-gradient-to-b from-gray-900/20 to-gray-900/80 transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl"
     >
       {/* Poster Image */}
-      <div className="relative aspect-[2/3] overflow-hidden">
-        <img
-          src={movie.cover_url || "/placeholder-poster.jpg"}
-          alt={movie.title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-          loading="lazy"
-        />
+      <div className="relative overflow-hidden w-full h-full">
+ 
+
+
+    <Image
+      src={movie.cover_url || "/placeholder-poster.jpg"}
+      alt={movie.title}
+      ratio="2/3"
+      fit="cover"
+      
+      className="transition-transform duration-700 group-hover:scale-110"
+    />
+
         
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent" />

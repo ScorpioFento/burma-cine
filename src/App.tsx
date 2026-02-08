@@ -4,7 +4,7 @@ import IntroLoading from "./components/IntroLoading/IntroLoading";
 import { useAppLoading } from "./hooks/useAppLoading";
 
 export default function App() {
-  const isLoading = useAppLoading();
+  // const isLoading = useAppLoading();
 
   function renderRoutes(routeList: RouteItem[]) {
     return routeList.map((r) => (
@@ -14,9 +14,9 @@ export default function App() {
     ));
   }
 
-  if (isLoading) {
-    return <IntroLoading />;
-  }
+  // if (isLoading) {
+  //   return <IntroLoading />;
+  // }
 
   return (
     <BrowserRouter>

@@ -1,9 +1,10 @@
-// MovieGrid.tsx - Container for multiple movie cards
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import MovieCard from "./MovieCard";
 import type { Movie } from "../services/interface/movie";
+import { useViewportWidth } from "../hooks/useViewPortWidth";
+import { calculateCardSize } from "../lib/cardLayout";
 
 interface MovieGridProps {
   movies: Movie[];
@@ -11,22 +12,40 @@ interface MovieGridProps {
   showFilters?: boolean;
 }
 
-export default function MovieGrid({ movies, title, showFilters = false }: MovieGridProps) {
+export default function MovieGrid({
+  movies,
+  title,
+  showFilters = false,
+}: MovieGridProps) {
   const gridRef = useRef<HTMLDivElement>(null);
   const [filter, setFilter] = useState<string>("all");
+
+  const { width: viewportWidth } = useViewportWidth();
+
+  const { width: cardWidth, height : cardHeight } = calculateCardSize(viewportWidth, {
+    responsiveRules: [
+      { maxWidth: 640, columns: 2 },
+      { maxWidth: 768, columns: 3 },
+      { maxWidth: 1024, columns: 4 },
+      { maxWidth: 1280, columns: 5 },
+      { maxWidth: Infinity, columns: 6 },
+    ],
+    columnGap: 24, 
+    aspectRatio: 1.5, 
+  });
 
   useGSAP(() => {
     if (gridRef.current) {
       gsap.from(".movie-card", {
         y: 60,
         opacity: 0,
-        stagger: 0.1,
-        duration: 0.8,
+        stagger: 0.08,
+        duration: 0.7,
         ease: "power3.out",
         scrollTrigger: {
           trigger: gridRef.current,
-          start: "top 80%",
-        }
+          start: "top 85%",
+        },
       });
     }
   }, [movies]);
@@ -39,10 +58,12 @@ export default function MovieGrid({ movies, title, showFilters = false }: MovieG
           {title && (
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 md:mb-0">
               {title}
-              <span className="text-amber-500 ml-2">({movies.length})</span>
+              <span className="text-amber-500 ml-2">
+                ({movies.length})
+              </span>
             </h2>
           )}
-          
+
           {showFilters && (
             <div className="flex gap-2">
               {["all", "movie", "series", "popular"].map((filterType) => (
@@ -55,20 +76,28 @@ export default function MovieGrid({ movies, title, showFilters = false }: MovieG
                       : "bg-gray-800 text-gray-300 hover:bg-gray-700"
                   }`}
                 >
-                  {filterType.charAt(0).toUpperCase() + filterType.slice(1)}
+                  {filterType.charAt(0).toUpperCase() +
+                    filterType.slice(1)}
                 </button>
               ))}
             </div>
           )}
         </div>
 
-        {/* Grid */}
-        <div 
+        {/* Flexible Grid */}
+        <div
           ref={gridRef}
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6"
+          className="flex gap-4 flex-wrap bg-amber-700"
         >
           {movies.map((movie) => (
-            <div key={movie.id} className="movie-card">
+            <div
+              key={movie.id}
+              className="movie-card"
+                style={{
+    width: `${cardWidth}px`,
+    height: `${cardHeight}px`
+  }}
+            >
               <MovieCard movie={movie} />
             </div>
           ))}
