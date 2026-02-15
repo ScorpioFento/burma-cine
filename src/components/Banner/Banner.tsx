@@ -10,6 +10,7 @@ type BannerItem = {
   title: string;
   genres: string;
   year: string;
+  imdb_rating? : string;
 };
 
 const GAP = 16;

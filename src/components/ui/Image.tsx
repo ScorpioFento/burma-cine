@@ -15,7 +15,7 @@ export function Image({
 }: UIImageProps) {
   return (
     <div
-      className={`w-full overflow-hidden ${className}`}
+      className={`w-full h-auto overflow-hidden ${className}`}
       style={{ aspectRatio: ratio }}
     >
       <img src={src} alt={alt} className={`w-full h-full object-${fit}`} />
