@@ -117,7 +117,7 @@ const useResponsiveCardSize = () => {
     // Calculate width as percentage of viewport (scales smoothly)
     const percentage = Math.min(
       0.25,
-      Math.max(0.15, 0.25 - viewportWidth * 0.00005)
+      Math.max(0.15, 0.25 - viewportWidth * 0.00005),
     );
     let width = Math.round(viewportWidth * percentage);
 
@@ -191,7 +191,7 @@ export default function FeaturedCarousels() {
       width: Math.round(radius * 2 + CARD_WIDTH + CONFIG.CARD_GAP),
       height: Math.round(CARD_HEIGHT + 100),
     }),
-    [radius, CARD_WIDTH, CARD_HEIGHT]
+    [radius, CARD_WIDTH, CARD_HEIGHT],
   );
 
   const pauseAutoAnimation = useCallback(() => {
@@ -229,7 +229,7 @@ export default function FeaturedCarousels() {
       totalRotation,
       theta,
       setTotalRotation,
-    ]
+    ],
   );
 
   const handleDragStart = useCallback(
@@ -243,7 +243,7 @@ export default function FeaturedCarousels() {
         distance: 0,
       }));
     },
-    [pauseAutoAnimation]
+    [pauseAutoAnimation],
   );
 
   const handleDragMove = useCallback(
@@ -258,7 +258,7 @@ export default function FeaturedCarousels() {
         -totalRotation - rotationFactor
       }deg)`;
     },
-    [dragState.isDragging, dragState.startX, totalRotation, radius]
+    [dragState.isDragging, dragState.startX, totalRotation, radius],
   );
 
   const handleDragEnd = useCallback(() => {
@@ -289,14 +289,14 @@ export default function FeaturedCarousels() {
     (e: React.MouseEvent) => {
       handleDragStart(e.clientX);
     },
-    [handleDragStart]
+    [handleDragStart],
   );
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
       handleDragMove(e.clientX);
     },
-    [handleDragMove]
+    [handleDragMove],
   );
 
   const handleTouchStart = useCallback(
@@ -304,7 +304,7 @@ export default function FeaturedCarousels() {
       const touch = e.touches[0];
       handleDragStart(touch.clientX);
     },
-    [handleDragStart]
+    [handleDragStart],
   );
 
   const handleTouchMove = useCallback(
@@ -312,7 +312,7 @@ export default function FeaturedCarousels() {
       const touch = e.touches[0];
       handleDragMove(touch.clientX);
     },
-    [handleDragMove]
+    [handleDragMove],
   );
 
   const handleWheel = useCallback(
@@ -322,7 +322,7 @@ export default function FeaturedCarousels() {
         rotateCarousel(e.deltaY > 0 ? "left" : "right");
       }
     },
-    [rotateCarousel]
+    [rotateCarousel],
   );
 
   useEffect(() => {
@@ -379,10 +379,10 @@ export default function FeaturedCarousels() {
             stagger: 0.2,
             duration: 4,
           },
-          "start+=0.4"
+          "start+=0.4",
         );
     },
-    { scope: titleRef }
+    { scope: titleRef },
   );
 
   return (

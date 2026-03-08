@@ -56,6 +56,36 @@ const BANNERS: BannerItem[] = [
     genres: "Action",
     year: "2019",
   },
+   {
+    id : 5,
+    img: "https://flixtv.volkovdesign.com/main/img/home/4.jpg",
+    title: "Movie 5",
+    genres: "Action",
+    year: "2019",
+  },
+  {
+    id : 6,
+    img: "https://flixtv.volkovdesign.com/main/img/home/4.jpg",
+    title: "Movie 6",
+    genres: "Action",
+    year: "2019",
+  },
+   {
+    id : 7,
+    img: "https://flixtv.volkovdesign.com/main/img/home/4.jpg",
+    title: "Movie 7",
+    genres: "Action",
+    year: "2019",
+  },
+   {
+    id : 8,
+    img: "https://flixtv.volkovdesign.com/main/img/home/4.jpg",
+    title: "Movie 8",
+    genres: "Action",
+    year: "2019",
+  },
+
+  
 ];
 
 export default function Banner() {
@@ -113,7 +143,6 @@ function BannerCard({
       style={{
         width,
         height,
-
         background:
           "linear-gradient(135deg, rgba(47, 128, 237, 0.15) 0%, rgba(19, 23, 32, 0.9) 100%)",
         boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
