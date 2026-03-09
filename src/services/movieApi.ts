@@ -10,7 +10,7 @@ export interface GetMovieQuery extends PaginationQuery {
 export const movieApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getMovies: builder.query<PaginatedResponse<Movie>, GetMovieQuery | void>({
-      query: (params) => `movies${toQueryString(params || {})}`,
+      query: (params) => `title${toQueryString(params || {})}`,
     }),
 
     getMovieById: builder.query<Movie, number>({
