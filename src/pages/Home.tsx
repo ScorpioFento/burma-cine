@@ -8,9 +8,9 @@ export default function Home() {
   return (
     <>
       <Banner />
-        {/* <MovieGrid movies={sampleMovies} title="Featured Movies" showFilters /> */}
+        <MovieGrid movies={sampleMovies} title="Featured Movies" showFilters />
 
-      <MovieSection />
+      {/* <MovieSection /> */}
 
       <FeaturedCarousels />
     </>
